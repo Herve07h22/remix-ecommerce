@@ -1,0 +1,16 @@
+{
+  "exclude": ["*.spec.ts"],
+  "compilerOptions": {
+    "lib": ["ES2019"],
+    "target": "ES2019",
+
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+
+    "declaration": true,
+
+    "outDir": "/Users/herve/Documents/projets/sugggest/packages/remix-app/node_modules/@sugggest/core",
+    "rootDir": "."
+  }
+}
