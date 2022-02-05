@@ -21,7 +21,10 @@ export function makeNewLead(email: string, tokenDuration: number): Lead {
   };
 }
 
-export function newAsk(lead: Lead, tokenDuration: number): Lead {
+export function registeredLeadWithNewToken(
+  lead: Lead,
+  tokenDuration: number
+): Lead {
   return {
     ...lead,
     generationCount: 0,
@@ -31,7 +34,7 @@ export function newAsk(lead: Lead, tokenDuration: number): Lead {
   };
 }
 
-export function isValidToken(lead: Lead): boolean {
+export function hasValidToken(lead: Lead): boolean {
   return lead.validTokenUntil > new Date().valueOf();
 }
 
@@ -44,4 +47,8 @@ export function tooFrequentGeneration(lead: Lead, intervallInMs: number) {
 
 export function tooManyGeneration(lead: Lead, nbMax: number) {
   return lead.generationCount && lead.generationCount >= nbMax;
+}
+
+export function isRegisteredLead(lead: Lead | undefined): lead is Lead {
+  return !!lead;
 }

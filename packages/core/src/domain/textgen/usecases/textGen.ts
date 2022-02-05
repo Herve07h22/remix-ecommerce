@@ -1,6 +1,6 @@
 import { IAService } from "../../gateways/ia/IAService";
 import {
-  isValidToken,
+  hasValidToken,
   tooFrequentGeneration,
   tooManyGeneration,
 } from "../../register/models/Lead";
@@ -20,7 +20,7 @@ export async function textGen(
   }
 ): Promise<{ status: string; message?: string; results?: string[] }> {
   const lead = await dependencies.leadRepository.getByToken(params.token);
-  if (lead && isValidToken(lead) && isValidContext(params.context)) {
+  if (lead && hasValidToken(lead) && isValidContext(params.context)) {
     if (tooFrequentGeneration(lead, MIN_DELAY_BETWWEEN_EACH_GENERATION)) {
       return {
         status: "error",

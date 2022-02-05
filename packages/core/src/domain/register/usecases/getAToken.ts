@@ -1,7 +1,13 @@
 import { MailService } from "../../gateways/mail/MailService";
-import { isValidToken, Lead, makeNewLead, newAsk } from "../models/Lead";
+import {
+  isRegisteredLead,
+  hasValidToken,
+  Lead,
+  makeNewLead,
+  registeredLeadWithNewToken,
+} from "../models/Lead";
 import { LeadRepository } from "../repository/LeadRepository";
-import { addLeadAndsendToken } from "../services/addLeadAndsendToken";
+import { upsertLeadAndsendTokenService } from "../services/upsertLeadAndsendTokenService";
 
 const TOKEN_DURATION = 1000 * 60 * 60 * 24; // 1 day
 
@@ -12,27 +18,26 @@ export async function getAToken(
     leadRepository: LeadRepository;
   }
 ): Promise<{ status: string; token?: string | null; message?: string }> {
-  const lead = await dependencies.leadRepository.getByEmail(params.email);
-  if (lead) {
-    if (isValidToken(lead)) {
-      return addLeadAndsendToken(
-        lead,
-        dependencies.mailService,
-        dependencies.leadRepository
-      );
-    }
-    // Expired token : deliver a brand new one
-    return addLeadAndsendToken(
-      newAsk(lead, TOKEN_DURATION),
+  // Rename the curried function
+  const upsertAndSendToken = (lead: Lead) =>
+    upsertLeadAndsendTokenService(
+      lead,
       dependencies.mailService,
       dependencies.leadRepository
     );
-  } else {
-    const newLead = makeNewLead(params.email, TOKEN_DURATION);
-    return addLeadAndsendToken(
-      newLead,
-      dependencies.mailService,
-      dependencies.leadRepository
+
+  const maybeRegisteredLead = await dependencies.leadRepository.getByEmail(
+    params.email
+  );
+
+  if (isRegisteredLead(maybeRegisteredLead)) {
+    const registeredLead = maybeRegisteredLead; // Rename the lead since its type has changed
+    return upsertAndSendToken(
+      hasValidToken(registeredLead)
+        ? registeredLead
+        : registeredLeadWithNewToken(registeredLead, TOKEN_DURATION)
     );
   }
+
+  return upsertAndSendToken(makeNewLead(params.email, TOKEN_DURATION));
 }

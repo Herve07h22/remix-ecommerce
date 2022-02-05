@@ -2,7 +2,7 @@ import { MailService } from "../../gateways/mail/MailService";
 import { Lead } from "../models/Lead";
 import { LeadRepository } from "../repository/LeadRepository";
 
-export async function addLeadAndsendToken(
+export async function upsertLeadAndsendTokenService(
   lead: Lead,
   mailService: MailService,
   leadRepository: LeadRepository
