@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "remix";
 import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import { Logo } from "../ui/Logo";
 import { useState } from "react";

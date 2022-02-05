@@ -8,7 +8,6 @@
     "build": "remix build",
     "dev": "remix dev",
     "routes": "remix routes",
-    "postinstall": "remix setup node",
     "start": "remix-serve build"
   },
   "dependencies": {

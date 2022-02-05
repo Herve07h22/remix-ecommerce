@@ -1,6 +1,4 @@
 import { App } from "@sugggest/core/App";
-import { Outlet } from "remix";
-import { LandingLayout } from "~/components/layouts/LandingLayout";
 import { Hero } from "~/components/sections/Hero";
 
 export async function loader() {

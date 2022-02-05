@@ -6,7 +6,8 @@
     "clean": "git clean -fdX .",
     "test": "jest",
     "dev": "yarn workspace @sugggest/core run build && remix dev packages/remix-app",
-    "build": "yarn workspaces run build"
+    "build": "yarn workspaces run build",
+    "postinstall": "remix setup node"
   },
   "workspaces": [
     "packages/core",

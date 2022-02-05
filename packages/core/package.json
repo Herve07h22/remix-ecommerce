@@ -14,6 +14,6 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "build": "esbuild ./src/App.ts --bundle  --platform=node --target=node14 --outfile=App.js"
+    "build": "tsc -d && esbuild ./src/App.ts --bundle  --platform=node --target=node14 --outfile=../remix-app/node_modules/@sugggest/core/App.js"
   }
 }
