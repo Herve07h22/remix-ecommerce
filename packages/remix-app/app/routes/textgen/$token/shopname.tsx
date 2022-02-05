@@ -3,12 +3,35 @@ import {
   Heading,
   Textarea,
   Button,
-  Box,
-  UnorderedList,
-  ListItem,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 
+import { App } from "@sugggest/core/App";
+import { ActionFunction, json, redirect, useActionData } from "remix";
+import { Suggest } from "~/components/sections/Suggest";
+
+type ActionData = {
+  status: string;
+  message?: string | undefined;
+  results?: string[] | undefined;
+};
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const body = await request.formData();
+  const textinput = body.get("textinput")?.toString() || "";
+  const token = params.token || "";
+  const result: ActionData = await App.textGen({
+    token,
+    input: textinput,
+    context: "shop_name",
+  });
+  return json(result, { status: 200 });
+};
+
 export default function TextGenIndexRoute() {
+  const result = useActionData<ActionData>();
   return (
     <>
       <Heading as="h1" size="xl">
@@ -18,31 +41,41 @@ export default function TextGenIndexRoute() {
         Ecrivez une ou deux phrases de contexte. Elles vont être analysées par
         l'IA pour en déduire des propositions de noms adaptées.
       </Text>
-      <Textarea
-        minHeight={150}
-        isFullWidth
-        placeholder="Je vends de produits cosmétiques bio fabriqués à partir de plantes sauvages récoltées en Corse, pour ceux qui veulent prendre naturellement soin de leur corps."
-      />
-      <Button
-        colorScheme="primary"
-        borderRadius="8px"
-        py="4"
-        px="4"
-        lineHeight="1"
-      >
-        Trouver des idées de nom
-      </Button>
-      <Box w="100%" p={4} borderWidth="1px" borderRadius="lg">
-        <UnorderedList>
-          <ListItem>Lorem ipsum dolor sit amet</ListItem>
-          <ListItem>Consectetur adipiscing elit</ListItem>
-          <ListItem>Integer molestie lorem at massa</ListItem>
-          <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-        </UnorderedList>
-        <Box w="100%" textAlign={"end"}>
-          <Button size="xs">Copier</Button>
-        </Box>
-      </Box>
+      <form method="post">
+        <Textarea
+          name="text"
+          minHeight={150}
+          isFullWidth
+          placeholder="Je vends de produits cosmétiques bio fabriqués à partir de plantes sauvages récoltées en Corse, pour ceux qui veulent prendre naturellement soin de leur corps."
+        />
+        <Button
+          type="submit"
+          colorScheme="primary"
+          borderRadius="8px"
+          py="4"
+          px="4"
+          lineHeight="1"
+        >
+          Trouver des idées de nom
+        </Button>
+      </form>
+      {result && result.status === "success" ? (
+        <Suggest items={result.results || []} />
+      ) : (
+        <Suggest
+          items={[
+            "Lorem ipsum dolor sit amet",
+            "Consectetur adipiscing elit",
+            "Integer molestie lorem at massa",
+          ]}
+        />
+      )}
+      {result?.message ? (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>{result?.message}</AlertTitle>
+        </Alert>
+      ) : null}
     </>
   );
 }

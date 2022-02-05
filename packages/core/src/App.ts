@@ -5,6 +5,7 @@ import { getAToken } from "./domain/register/usecases/getAToken";
 import { textGen } from "./domain/textgen/usecases/textGen";
 
 import * as dotenv from "dotenv";
+import { getLeadStats } from "./domain/register/usecases/getLeadStats";
 
 const path = require("path");
 //require("dotenv")
@@ -24,4 +25,6 @@ export const App = {
     getAToken(params, dependencies),
   textGen: async (params: { token: string; input: string; context: string }) =>
     textGen(params, dependencies),
+  getLeadStats: async (params: { token: string }) =>
+    getLeadStats(params, dependencies),
 };

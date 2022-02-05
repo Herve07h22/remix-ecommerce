@@ -7,9 +7,9 @@ import {
 import { LeadRepository } from "../../register/repository/LeadRepository";
 import { getPostSentence, isValidContext } from "../models/postSentence";
 
-const MIN_DELAY_BETWWEEN_EACH_GENERATION =
+export const MIN_DELAY_BETWWEEN_EACH_GENERATION =
   parseInt(process.env.MIN_DELAY_BETWWEEN_EACH_GENERATION || "0") || 1000 * 10; // 10 seconds
-const MAX_DAILY_NB_GENERATION =
+export const MAX_DAILY_NB_GENERATION =
   parseInt(process.env.MAX_DAILY_NB_GENERATION || "0") || 10;
 
 export async function textGen(

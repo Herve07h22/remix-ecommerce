@@ -41,12 +41,12 @@ export function hasValidToken(lead: Lead): boolean {
 export function tooFrequentGeneration(lead: Lead, intervallInMs: number) {
   return (
     lead.lastGeneration &&
-    lead.lastGeneration + intervallInMs > new Date().valueOf()
+    lead.lastGeneration + intervallInMs > new Date().valueOf() ? true : false
   );
 }
 
 export function tooManyGeneration(lead: Lead, nbMax: number) {
-  return lead.generationCount && lead.generationCount >= nbMax;
+  return lead.generationCount >= nbMax ;
 }
 
 export function isRegisteredLead(lead: Lead | undefined): lead is Lead {
