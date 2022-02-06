@@ -38,7 +38,7 @@ it("An invalid token prevent from generating", async () => {
     );
 
     expect(result?.status).toBe("error");
-    expect(result?.message).toBe("token not found");
+    expect(result?.message).toBe("TOKEN_NOT_FOUND");
   }
 });
 
@@ -68,7 +68,7 @@ it("A lead can generate shops name with a valid token", async () => {
   }
 });
 
-it("A lead with a valid token has to wait 10 seconds between each IA generation", async () => {
+it("MIN_DELAY_BETWEEN_EACH_GENERATION", async () => {
   process.env.URL_GENERATION_PAGE = "https://something.com";
   const { token } = await getAToken(
     { email: "test@gmail.com" },
@@ -98,7 +98,7 @@ it("A lead with a valid token has to wait 10 seconds between each IA generation"
     );
 
     expect(result?.status).toBe("error");
-    expect(result?.message).toBe("Wait 10 seconds between each IA generation");
+    expect(result?.message).toBe("MIN_DELAY_BETWEEN_EACH_GENERATION");
   }
 });
 
@@ -173,6 +173,6 @@ it("A lead with a valid token who waits between each IA generation cannot get mo
     );
 
     expect(result?.status).toBe("error");
-    expect(result?.message).toBe("No more than 10 IA generation each day");
+    expect(result?.message).toBe("MAX_DAILY_NB_GENERATION");
   }
 });

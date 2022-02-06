@@ -19,6 +19,21 @@ type ActionData = {
   results?: string[] | undefined;
 };
 
+const formatInfoMessage = (message?: string) => {
+  switch (message) {
+    case "TOKEN_NOT_FOUND":
+      return "Votre lien n'est plus valide";
+    case "MAX_DAILY_NB_GENERATION":
+      return "Vous avez atteint le maximum de générations (10)";
+    case "MIN_DELAY_BETWEEN_EACH_GENERATION":
+      return "Doucement :) Il faut attendre 10s entre chaque génération";
+    case "IA_MODEL_ERROR":
+      return "Le modèle de l'IA n'est pas disponible";
+    default:
+      return "Une erreur est survenue";
+  }
+};
+
 export const action: ActionFunction = async ({ request, params }) => {
   const body = await request.formData();
   const textinput = body.get("textinput")?.toString() || "";
@@ -42,7 +57,6 @@ export default function TextGenIndexRoute() {
       <Text fontSize="md">
         Ecrivez une ou deux phrases de contexte. Elles vont être analysées par
         l'IA pour en déduire des propositions de noms adaptées.
-        {JSON.stringify(result)}
       </Text>
       <Form method="post">
         <Textarea
@@ -58,6 +72,8 @@ export default function TextGenIndexRoute() {
           py="4"
           px="4"
           lineHeight="1"
+          mt="2"
+          width="100%"
         >
           Trouver des idées de nom
         </Button>
@@ -67,7 +83,12 @@ export default function TextGenIndexRoute() {
           case "success":
             return <Suggest items={result.results || []} />;
           case "error":
-            return <ErrorAlert status="error" title={result?.message} />;
+            return (
+              <ErrorAlert
+                status="error"
+                title={formatInfoMessage(result?.message)}
+              />
+            );
           default:
             return null;
         }

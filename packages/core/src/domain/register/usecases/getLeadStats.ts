@@ -1,12 +1,3 @@
-import {
-  MAX_DAILY_NB_GENERATION,
-  MIN_DELAY_BETWWEEN_EACH_GENERATION,
-} from "../../textgen/usecases/textGen";
-import {
-  tooFrequentGeneration,
-  tooManyGeneration,
-  hasValidToken,
-} from "../models/Lead";
 import { LeadRepository } from "../repository/LeadRepository";
 
 export type GetLeadStatsResult =
@@ -18,9 +9,6 @@ export type GetLeadStatsResult =
       status: "success";
       validTokenUntil: number;
       generationCount: number;
-      tooFrequentGeneration: boolean;
-      tooManyGeneration: boolean;
-      hasValidToken: boolean;
     };
 
 export async function getLeadStats(
@@ -35,15 +23,6 @@ export async function getLeadStats(
       status: "success",
       validTokenUntil: lead.validTokenUntil,
       generationCount: lead.generationCount,
-      tooFrequentGeneration: tooFrequentGeneration(
-        lead,
-        MIN_DELAY_BETWWEEN_EACH_GENERATION
-      ),
-      tooManyGeneration: tooManyGeneration(
-        lead,
-        MAX_DAILY_NB_GENERATION
-      ),
-      hasValidToken: hasValidToken(lead),
     };
   }
   return { status: "error", message: "token not found" };

@@ -1,12 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Container,
-  VStack,
-} from "@chakra-ui/react";
+import { Text, Container, VStack } from "@chakra-ui/react";
 import { Link, Outlet, useLoaderData, useParams } from "@remix-run/react";
 import { json, LoaderFunction } from "remix";
 import { App } from "@sugggest/core/App";
@@ -23,21 +15,8 @@ export const loader: LoaderFunction = async ({ params }) => {
   return json(result);
 };
 
-const formatInfoMessage = (flags : {tooFrequentGeneration: boolean;
-  tooManyGeneration: boolean;
-  hasValidToken: boolean;}) => {
-    switch(true) {
-      case !flags.hasValidToken : return "Votre lien n'est plus valide"
-      case flags.tooManyGeneration : return "Vous avez atteint le maximum de générations (10)"
-      case flags.tooFrequentGeneration : return "Doucement :) Il faut attendre 10s entre chaque génération"
-      default : ""       
-    }
-  }
-
 export default function TokenRoute() {
   const data = useLoaderData<GetLeadStatsResult>();
-  console.log(data);
-  const errorMessage = data.status==="success" && formatInfoMessage(data)
 
   return (
     <Container maxW="2xl">
@@ -54,19 +33,16 @@ export default function TokenRoute() {
               </span>
             }
           />
-        ) : <Outlet />}
-        
+        ) : (
+          <Outlet />
+        )}
 
         {data && data.status === "success" ? (
-          <ErrorAlert
-            status={errorMessage ? "error" : "success"}
-            title={<span>{errorMessage}</span>}
-            desc={
-              <span>{data.generationCount} / 10 générations jusqu'au {new Date(data.validTokenUntil).toLocaleString()} </span>
-            }
-          />
+          <Text fontSize="sm" color="GrayText">
+            {10 - data.generationCount} générations possibles jusqu'au{" "}
+            {new Date(data.validTokenUntil).toLocaleString()}
+          </Text>
         ) : null}
-        <p>Data :{JSON.stringify(data)}</p>
       </VStack>
     </Container>
   );
