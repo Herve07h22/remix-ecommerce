@@ -59,8 +59,8 @@ const path = require('path')
 const { findSync } = require('./runtime')
 
 const dirname = findSync(process.cwd(), [
-    "packages\\core\\src\\gateways\\prisma\\generated\\client",
-    "core\\src\\gateways\\prisma\\generated\\client",
+    "src\\gateways\\prisma\\generated\\client",
+    "gateways\\prisma\\generated\\client",
 ], ['d'], ['d'], 1)[0] || __dirname
 /**
  * Enums
@@ -116,7 +116,7 @@ const config = {
   },
   "relativeEnvPaths": {
     "rootEnvPath": "..\\..\\..\\..\\..\\.env",
-    "schemaEnvPath": "..\\..\\..\\..\\..\\..\\..\\.env"
+    "schemaEnvPath": "..\\..\\..\\..\\..\\.env"
   },
   "relativePath": "..\\..\\..\\..\\..\\prisma",
   "clientVersion": "3.9.1",
@@ -143,6 +143,6 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 path.join(__dirname, 'query_engine-windows.dll.node');
-path.join(process.cwd(), './packages\core\src\gateways\prisma\generated\client\query_engine-windows.dll.node')
+path.join(process.cwd(), './src\gateways\prisma\generated\client\query_engine-windows.dll.node')
 path.join(__dirname, 'schema.prisma');
-path.join(process.cwd(), './packages\core\src\gateways\prisma\generated\client\schema.prisma')
+path.join(process.cwd(), './src\gateways\prisma\generated\client\schema.prisma')
