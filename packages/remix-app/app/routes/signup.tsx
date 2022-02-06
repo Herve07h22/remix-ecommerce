@@ -4,9 +4,11 @@ import { App } from "@sugggest/core/App";
 
 export const action: ActionFunction = async ({ request }) => {
     const body = await request.formData();
-    const email = body.get("title")?.toString()
-    const result = await App.getAToken({ email: email || "" });
-    if (result.status==="success") return redirect(`/signup/sent?token=${result.token}`);
+    const email = body.get("email")
+    if (email) {
+        const result = await App.getAToken({ email: email.toString() || "" });
+        if (result.status==="success") return redirect(`/signup/sent?token=${result.token}`);    
+    }
     return redirect("/signup/error")
   }
 

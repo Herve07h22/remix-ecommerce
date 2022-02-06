@@ -7,7 +7,9 @@
     "test": "jest",
     "dev": "yarn workspace @sugggest/core run build && remix dev packages/remix-app",
     "build": "yarn workspaces run build",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "migrate": "yarn workspace @sugggest/core run migrate",
+    "studio": "yarn workspace @sugggest/core run studio"
   },
   "workspaces": [
     "packages/core",
