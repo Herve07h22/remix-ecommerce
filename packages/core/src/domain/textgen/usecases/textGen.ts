@@ -1,5 +1,6 @@
 import { IAService } from "../../gateways/ia/IAService";
 import {
+  addNewGeneration,
   hasValidToken,
   tooFrequentGeneration,
   tooManyGeneration,
@@ -36,8 +37,9 @@ export async function textGen(
     const generatedText = await dependencies.iaService.generate(
       params.input + ". " + getPostSentence(params.context)
     );
-    await dependencies.leadRepository.saveNewGeneration(lead);
+    
     if (generatedText.length > 0) {
+      await dependencies.leadRepository.upsertLead(addNewGeneration(lead));
       return { status: "success", results: generatedText };
     } else {
       return { status: "error", message: "IA_MODEL_ERROR" };

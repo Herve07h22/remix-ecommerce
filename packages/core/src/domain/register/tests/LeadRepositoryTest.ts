@@ -18,22 +18,14 @@ export class LeadRepositoryTest implements LeadRepository {
     this._leads.set(lead.email, lead);
   }
 
-  async saveNewGeneration(lead: Lead) {
-    this._leads.set(lead.email, {
-      ...lead,
-      lastGeneration: new Date().valueOf(),
-      generationCount: lead.generationCount + 1,
-    });
-  }
-
   setCreatedDatetoYesterday(email: string, ask: number) {
     const lead = this._leads.get(email);
     if (lead) {
-      lead.validTokenUntil = new Date().valueOf() - ask * 24 * 60 * 60 * 1000;
+      lead.validTokenUntil = new Date(new Date().valueOf() - ask * 24 * 60 * 60 * 1000);
     }
   }
 
   setLastGenerationBackTo(lead: Lead, back: number) {
-    lead.lastGeneration = new Date().valueOf() - back;
+    lead.lastGeneration = new Date(new Date().valueOf() - back);
   }
 }

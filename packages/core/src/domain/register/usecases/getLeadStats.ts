@@ -21,7 +21,7 @@ export async function getLeadStats(
   if (lead) {
     return {
       status: "success",
-      validTokenUntil: lead.validTokenUntil,
+      validTokenUntil: lead.validTokenUntil.valueOf(),
       generationCount: lead.generationCount,
     };
   }

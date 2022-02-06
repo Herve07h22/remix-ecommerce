@@ -6,6 +6,7 @@ import { textGen } from "./domain/textgen/usecases/textGen";
 
 import * as dotenv from "dotenv";
 import { getLeadStats } from "./domain/register/usecases/getLeadStats";
+import { LeadRepositoryPrisma } from "./gateways/prisma/LeadRepositoryPrisma";
 
 const path = require("path");
 //require("dotenv")
@@ -16,7 +17,7 @@ dotenv.config({
 
 const dependencies = {
   mailService: new MailServiceTest(),
-  leadRepository: new LeadRepositoryTest(),
+  leadRepository: new LeadRepositoryPrisma(),
   iaService: new IAServiceTest(),
 };
 
