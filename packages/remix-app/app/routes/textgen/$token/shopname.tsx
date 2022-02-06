@@ -9,7 +9,8 @@ import {
 } from "@chakra-ui/react";
 
 import { App } from "@sugggest/core/App";
-import { ActionFunction, json, redirect, useActionData } from "remix";
+import { ActionFunction, Form, json, redirect, useActionData } from "remix";
+import { ErrorAlert } from "~/components/sections/ErrorAlert";
 import { Suggest } from "~/components/sections/Suggest";
 
 type ActionData = {
@@ -32,6 +33,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function TextGenIndexRoute() {
   const result = useActionData<ActionData>();
+  console.log("result:", result);
   return (
     <>
       <Heading as="h1" size="xl">
@@ -40,8 +42,9 @@ export default function TextGenIndexRoute() {
       <Text fontSize="md">
         Ecrivez une ou deux phrases de contexte. Elles vont être analysées par
         l'IA pour en déduire des propositions de noms adaptées.
+        {JSON.stringify(result)}
       </Text>
-      <form method="post">
+      <Form method="post">
         <Textarea
           name="text"
           minHeight={150}
@@ -58,24 +61,17 @@ export default function TextGenIndexRoute() {
         >
           Trouver des idées de nom
         </Button>
-      </form>
-      {result && result.status === "success" ? (
-        <Suggest items={result.results || []} />
-      ) : (
-        <Suggest
-          items={[
-            "Lorem ipsum dolor sit amet",
-            "Consectetur adipiscing elit",
-            "Integer molestie lorem at massa",
-          ]}
-        />
-      )}
-      {result?.message ? (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle mr={2}>{result?.message}</AlertTitle>
-        </Alert>
-      ) : null}
+      </Form>
+      {(function () {
+        switch (result?.status) {
+          case "success":
+            return <Suggest items={result.results || []} />;
+          case "error":
+            return <ErrorAlert status="error" title={result?.message} />;
+          default:
+            return null;
+        }
+      })()}
     </>
   );
 }

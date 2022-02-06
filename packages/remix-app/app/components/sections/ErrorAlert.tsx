@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 export const ErrorAlert: React.FC<{
   status: "error" | "warning" | "success";
   title: string | ReactNode;
-  desc: string | ReactNode;
+  desc?: string | ReactNode;
 }> = ({ status, title, desc }) => {
   return (
     <Alert status={status}>
@@ -18,7 +18,7 @@ export const ErrorAlert: React.FC<{
       <Box>
         <AlertTitle>{title}</AlertTitle>
 
-        <AlertDescription>{desc}</AlertDescription>
+        {desc ? <AlertDescription>{desc}</AlertDescription> : null }
       </Box>
     </Alert>
   );

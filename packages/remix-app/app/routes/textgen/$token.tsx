@@ -54,8 +54,8 @@ export default function TokenRoute() {
               </span>
             }
           />
-        ) : null}
-        <Outlet />
+        ) : <Outlet />}
+        
 
         {data && data.status === "success" ? (
           <ErrorAlert
@@ -66,6 +66,7 @@ export default function TokenRoute() {
             }
           />
         ) : null}
+        <p>Data :{JSON.stringify(data)}</p>
       </VStack>
     </Container>
   );
