@@ -1,24 +1,23 @@
-import { IAServiceTest } from "./domain/gateways/ia/IAServiceTest";
-import { MailServiceTest } from "./domain/gateways/mail/MailServiceTest";
-import { LeadRepositoryTest } from "./domain/register/tests/LeadRepositoryTest";
 import { getAToken } from "./domain/register/usecases/getAToken";
 import { textGen } from "./domain/textgen/usecases/textGen";
-
 import * as dotenv from "dotenv";
-import { getLeadStats } from "./domain/register/usecases/getLeadStats";
-import { LeadRepositoryPrisma } from "./gateways/prisma/LeadRepositoryPrisma";
 
 const path = require("path");
-//require("dotenv")
+
 dotenv.config({
   debug: true,
   path: path.resolve(process.cwd(), ".env"),
 });
 
+import { getLeadStats } from "./domain/register/usecases/getLeadStats";
+import { LeadRepositoryPrisma } from "./gateways/prisma/LeadRepositoryPrisma";
+import { MailgunMailService } from "./gateways/mailgun/MailgunMailService";
+import { CedilleIAService } from "./gateways/cedille/CedilleIAService";
+
 const dependencies = {
-  mailService: new MailServiceTest(),
+  mailService: new MailgunMailService(),
   leadRepository: new LeadRepositoryPrisma(),
-  iaService: new IAServiceTest(),
+  iaService: new CedilleIAService(),
 };
 
 export const App = {

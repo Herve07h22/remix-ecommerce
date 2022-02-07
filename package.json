@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "git clean -fdX .",
     "test": "jest",
-    "dev": "yarn workspace @sugggest/core run build && remix dev packages/remix-app",
+    "dev": "yarn workspace @sugggest/core run build && yarn workspace @sugggest/remix-app run dev",
     "build": "yarn workspaces run build",
     "postinstall": "remix setup node",
     "migrate": "yarn workspace @sugggest/core run migrate",

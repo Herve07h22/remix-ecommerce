@@ -6,10 +6,11 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 import { App } from "@sugggest/core/App";
-import { ActionFunction, Form, json, redirect, useActionData } from "remix";
+import { ActionFunction, Form, json, redirect, useActionData, useTransition } from "remix";
 import { ErrorAlert } from "~/components/sections/ErrorAlert";
 import { Suggest } from "~/components/sections/Suggest";
 
@@ -36,19 +37,22 @@ const formatInfoMessage = (message?: string) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const body = await request.formData();
-  const textinput = body.get("textinput")?.toString() || "";
+  const textinput = body.get("text")?.toString() || "";
   const token = params.token || "";
-  const result: ActionData = await App.textGen({
-    token,
-    input: textinput,
-    context: "shop_name",
-  });
-  return json(result, { status: 200 });
+  if (token && textinput) {
+    const result: ActionData = await App.textGen({
+      token,
+      input: textinput,
+      context: "shop_name",
+    });
+    return json(result, { status: 200 });
+  }
 };
 
 export default function TextGenIndexRoute() {
   const result = useActionData<ActionData>();
-  console.log("result:", result);
+  const transition = useTransition();
+  const busy = transition.submission
   return (
     <>
       <Heading as="h1" size="xl">
@@ -63,7 +67,7 @@ export default function TextGenIndexRoute() {
           name="text"
           minHeight={150}
           isFullWidth
-          placeholder="Je vends de produits cosmétiques bio fabriqués à partir de plantes sauvages récoltées en Corse, pour ceux qui veulent prendre naturellement soin de leur corps."
+          placeholder="Je vends des produits cosmétiques bio fabriqués à partir de plantes sauvages récoltées en Corse, pour ceux qui veulent prendre naturellement soin de leur corps."
         />
         <Button
           type="submit"
@@ -75,7 +79,7 @@ export default function TextGenIndexRoute() {
           mt="2"
           width="100%"
         >
-          Trouver des idées de nom
+          {busy ? <CircularProgress isIndeterminate color='primary' /> : "Trouver des idées de nom"} 
         </Button>
       </Form>
       {(function () {
