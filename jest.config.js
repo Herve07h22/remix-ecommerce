@@ -1,9 +1,9 @@
 module.exports = {
-  projects: [
-    {
-      displayName: "sugggest-core",
-      testEnvironment: "node",
-      testMatch: ["<rootDir>/packages/core/**/*.spec.[jt]s?(x)"],
-    },
-  ],
+    projects: [
+        {
+            displayName: "sugggest",
+            testEnvironment: "node",
+            testMatch: ["<rootDir>/src/**/*.spec.[jt]s?(x)"],
+        },
+    ],
 };
