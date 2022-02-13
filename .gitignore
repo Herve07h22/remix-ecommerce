@@ -5,3 +5,4 @@ node_modules
 /public/build
 .env
 suggest-dev.db
+env
