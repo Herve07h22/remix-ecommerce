@@ -1,0 +1,10 @@
+node_modules
+/.cache
+/build
+/public/build
+suggest-dev.db
+env
+.env
+/src/infra/log
+/src/infra/certs
+sugggest-dev.db

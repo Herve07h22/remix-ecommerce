@@ -11,6 +11,9 @@ export async function upsertLeadAndsendTokenService(
   const url = process.env.URL_GENERATION_PAGE;
   if (!url) throw new Error("URL_GENERATION_PAGE is not set");
 
-  await mailService.sendToken(lead.email, `${url}/${lead.token}`);
+  await mailService.sendToken(
+    lead.email,
+    `${url}/textgen/${lead.token}/shopname`
+  );
   return { status: "success", token: lead.token };
 }
