@@ -6,7 +6,7 @@ services:
     container_name: sugggest-remix
     restart: unless-stopped
     volumes:
-      - ./src/gateways/prisma/sugggest-dev.db:/usr/src/sugggest/src/gateways/prisma/sugggest-dev.db
+      - ./src/gateways/prisma/db:/usr/src/sugggest/src/gateways/prisma/db
       - ./.env:/usr/src/sugggest/.env
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services.
     expose:
