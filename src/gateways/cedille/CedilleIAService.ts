@@ -1,12 +1,12 @@
 import { IAService } from "../../domain/gateways/ia/IAService";
-
+const fetch = require("node-fetch");
 export class CedilleIAService implements IAService {
   private cedilleApiUrl: string;
   private cedilleApiKey: string;
   private nbOfIterations = 3;
 
   constructor() {
-    require("dotenv").config();
+    require("dotenv").config({ debug: false });
     if (!process.env.CEDILLE_API)
       throw new Error("Cedille API url is not defined in .env file");
     if (!process.env.CEDILLE_KEY)
@@ -20,7 +20,7 @@ export class CedilleIAService implements IAService {
       Array(this.nbOfIterations)
         .fill(0)
         .map(() => this.generateOne(input))
-    );
+    ).then((results) => results.filter((r) => r !== ""));
   }
 
   crop(textToCrop: string | undefined): string {
@@ -41,19 +41,23 @@ export class CedilleIAService implements IAService {
       repetition_penalty: 1.1,
       n: 1,
     };
-    const response = await fetch(this.cedilleApiUrl, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.cedilleApiKey}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
 
-    if (data.choices && data.choices.length) {
-      return this.crop(data.choices[0].text);
+    try {
+      const response = await fetch(this.cedilleApiUrl, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.cedilleApiKey}`,
+        },
+      });
+      const data = await response.json();
+
+      if (data.choices && data.choices.length) {
+        return this.crop(data.choices[0].text);
+      }
+    } catch (error) {
+      console.log("Error in Cedille IAService", error);
     }
 
     return "";
