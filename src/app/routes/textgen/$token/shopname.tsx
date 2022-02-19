@@ -1,15 +1,4 @@
-import {
-  Text,
-  Heading,
-  Textarea,
-  Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  CircularProgress,
-  Box,
-  Center,
-} from "@chakra-ui/react";
+import { Text, Heading, Textarea } from "@chakra-ui/react";
 
 import { App } from "~/App.server";
 import {
@@ -22,6 +11,7 @@ import {
 } from "remix";
 import { ErrorAlert } from "~/app/components/sections/ErrorAlert";
 import { Suggest } from "~/app/components/sections/Suggest";
+import { SubmitButton } from "~/app/components/ui/SubmitButton";
 
 type ActionData = {
   status: string;
@@ -61,7 +51,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function TextGenIndexRoute() {
   const result = useActionData<ActionData>();
   const transition = useTransition();
-  const busy = transition.submission;
+  const busy = !!transition.submission;
   return (
     <>
       <Heading as="h1" size="xl">
@@ -78,24 +68,7 @@ export default function TextGenIndexRoute() {
           isFullWidth
           placeholder="Je vends des produits cosmétiques bio fabriqués à partir de plantes sauvages récoltées en Corse, pour ceux qui veulent prendre naturellement soin de leur corps."
         />
-        {busy ? (
-          <Center width="100%" mt="2">
-            <CircularProgress isIndeterminate size="20px" />
-          </Center>
-        ) : (
-          <Button
-            type="submit"
-            colorScheme="primary"
-            borderRadius="8px"
-            py="4"
-            px="4"
-            lineHeight="1"
-            mt="2"
-            width="100%"
-          >
-            Trouver des idées de nom
-          </Button>
-        )}
+        <SubmitButton label=" Trouver des idées de nom" loading={busy} />
       </Form>
       {(function () {
         switch (result?.status) {
