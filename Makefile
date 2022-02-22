@@ -8,6 +8,8 @@ install-ssl:
 	@echo "--------------------------------------"
 	@echo "Installing the first SSL certificates "
 	@echo "--------------------------------------"
+	@echo "Firstly, make sure that there is no http server listening to TCP 80"
+	@echo "(if any, remove it with sudo systemctl disable apache2 && sudo systemctl stop apache2)"
 	@echo "Starting all the services : nginx and certbot have to be running"
 	@docker-compose up -d
 	@echo "We'll using nginx to serve http://sugggest.camilab.co/.well-known/acme-challenge/"
