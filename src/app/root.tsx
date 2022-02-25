@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
       "Sugggest | Trouvez des idées de noms de boutiques physiques et de e-commerce",
     description:
       "Sugggest est un générateur d'idées qui s'appuie sur un modèle d'IA. Entrez votre texte, et laissez l'IA suggérer des noms en rapport avec votre description.",
-    "og:image": "sugggest-exemple-annote.png",
+    "og:image": "/sugggest-exemple-annote.png",
   };
 };
 
