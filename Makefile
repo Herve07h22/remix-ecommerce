@@ -31,3 +31,9 @@ stop:
 	@echo "Stopping sugggest  "
 	@echo "--------------------------------------"
 	@docker-compose down
+
+all:
+	@git pull
+	@make install
+	@make start
+
