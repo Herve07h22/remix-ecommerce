@@ -19,4 +19,4 @@ jobs:
           username: debian
           key: ${{ secrets.KEY }}
           port: 22
-          script: deploy.sh
+          script: /home/debian/deploy.sh
