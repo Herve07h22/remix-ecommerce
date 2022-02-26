@@ -24,7 +24,7 @@ start:
 	@echo "Starting sugggest  "
 	@echo "--------------------------------------"
 	@docker-compose up -d
-	@docker exec -it sugggest-remix sh -c "yarn migrate"
+	@docker exec -i sugggest-remix sh -c "yarn migrate"
 
 stop:
 	@echo "--------------------------------------"
