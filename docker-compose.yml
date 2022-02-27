@@ -33,7 +33,7 @@ services:
       - ./src/infra/certs:/etc/letsencrypt
       - certbot_www:/var/www/certbot
       - ./src/infra/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - /etc/apache2/.htpasswd:/etc/apache2/.htpasswd 
+      - ./src/infra/.htpasswd:/etc/apache2/.htpasswd 
     ports:
       - 80:80
       - 443:443

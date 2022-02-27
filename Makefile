@@ -1,9 +1,12 @@
+include .env
+
 install:
 	@echo "--------------------------------------"
 	@echo "Building the docker image of the app  "
 	@echo "--------------------------------------"
 	@docker build -t sugggest -f ./src/infra/Dockerfile .
-	@echo "set an admin user/pwd with : sudo htpasswd -c /etc/apache2/.htpasswd <adminAccount> "
+	@echo "set an admin user/pwd "
+	@htpasswd -b -c ./src/infra/.htpasswd ${ADMIN_LOGIN} ${ADMIN_PWD}
 
 install-ssl:
 	@echo "--------------------------------------"
