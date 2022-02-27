@@ -3,6 +3,7 @@ install:
 	@echo "Building the docker image of the app  "
 	@echo "--------------------------------------"
 	@docker build -t sugggest -f ./src/infra/Dockerfile .
+	@echo "set an admin user/pwd with : sudo htpasswd -c /etc/apache2/.htpasswd <adminAccount> "
 
 install-ssl:
 	@echo "--------------------------------------"
