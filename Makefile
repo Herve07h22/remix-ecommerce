@@ -1,8 +1,12 @@
+include .env
+
 install:
 	@echo "--------------------------------------"
 	@echo "Building the docker image of the app  "
 	@echo "--------------------------------------"
 	@docker build -t sugggest -f ./src/infra/Dockerfile .
+	@echo "set an admin user/pwd "
+	@htpasswd -b -c ./src/infra/.htpasswd ${ADMIN_LOGIN} ${ADMIN_PWD}
 
 install-ssl:
 	@echo "--------------------------------------"
@@ -24,7 +28,7 @@ start:
 	@echo "Starting sugggest  "
 	@echo "--------------------------------------"
 	@docker-compose up -d
-	@docker exec -it sugggest-remix sh -c "yarn migrate"
+	@docker exec -i sugggest-remix sh -c "yarn migrate"
 
 stop:
 	@echo "--------------------------------------"

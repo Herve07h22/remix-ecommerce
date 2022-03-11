@@ -12,6 +12,18 @@ services:
     expose:
       - 3000
 
+  studio:
+    image: sugggest
+    container_name: sugggest-studio
+    command: "yarn studio"
+    restart: unless-stopped
+    volumes:
+      - ./src/gateways/prisma/db:/usr/src/sugggest/src/gateways/prisma/db
+      - ./.env:/usr/src/sugggest/.env
+    # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services.
+    expose:
+      - 5555
+
   nginx:
     image: nginx
     restart: unless-stopped
@@ -20,7 +32,8 @@ services:
       - ./src/infra/log/nginx:/var/log/nginx
       - ./src/infra/certs:/etc/letsencrypt
       - certbot_www:/var/www/certbot
-      - ./src/infra/nginx.conf:/etc/nginx/conf.d/nginx.conf 
+      - ./src/infra/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./src/infra/.htpasswd:/etc/apache2/.htpasswd 
     ports:
       - 80:80
       - 443:443
