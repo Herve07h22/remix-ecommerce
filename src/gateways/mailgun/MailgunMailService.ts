@@ -51,7 +51,7 @@ export class MailgunMailService implements MailService {
 
     let info = await this.transporter?.sendMail({
       from: this.sendMail, // sender address
-      to: "herve@camilab.co", // list of receivers
+      to: to, // list of receivers
       subject: "Votre lien d'accès à Sugggest ✔", // Subject line
       html: this.formatHtmlMessage(url), // html body
     });
