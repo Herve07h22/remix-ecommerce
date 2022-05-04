@@ -42,6 +42,10 @@ export default function CatalogRoute() {
           <button type="submit" name="addToCart" value="iphone-123">
             +
           </button>
+          &nbsp;
+          <button type="submit" name="addToCart" value="samsung-736">
+            +
+          </button>
         </Form>
       </VStack>
     </Container>
