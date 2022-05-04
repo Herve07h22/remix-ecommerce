@@ -7,4 +7,4 @@ env
 .env
 /src/infra/log
 /src/infra/certs
-sugggest-dev.db
+ecommerce-dev.db

@@ -13,16 +13,14 @@ import { LandingLayout } from "./components/layouts/LandingLayout";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sugggest | Trouvez des idées de noms !",
-    description:
-      "Sugggest est un générateur d'idées qui s'appuie sur un modèle d'IA. Entrez votre texte, et laissez l'IA suggérer des noms de boutiques physiques et de e-commerce en rapport avec votre description.",
-    "og:image": "/sugggest-exemple-annote.png",
+    title: "RemixCommerce | E-commerce sample with Remix",
+    description: "E-commerce website with Remix",
   };
 };
 
 export default function App() {
   return (
-    <html lang="fr">
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

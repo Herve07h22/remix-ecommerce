@@ -2,24 +2,24 @@ version: "3.7"
 
 services:
   remix:
-    image: sugggest
-    container_name: sugggest-remix
+    image: ecommerce
+    container_name: ecommerce-remix
     restart: unless-stopped
     volumes:
-      - ./src/gateways/prisma/db:/usr/src/sugggest/src/gateways/prisma/db
-      - ./.env:/usr/src/sugggest/.env
+      - ./src/gateways/prisma/db:/usr/src/ecommerce/src/gateways/prisma/db
+      - ./.env:/usr/src/ecommerce/.env
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services.
     expose:
       - 3000
 
   studio:
-    image: sugggest
-    container_name: sugggest-studio
+    image: ecommerce
+    container_name: ecommerce-studio
     command: "yarn studio"
     restart: unless-stopped
     volumes:
-      - ./src/gateways/prisma/db:/usr/src/sugggest/src/gateways/prisma/db
-      - ./.env:/usr/src/sugggest/.env
+      - ./src/gateways/prisma/db:/usr/src/ecommerce/src/gateways/prisma/db
+      - ./.env:/usr/src/ecommerce/.env
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services.
     expose:
       - 5555
@@ -27,13 +27,13 @@ services:
   nginx:
     image: nginx
     restart: unless-stopped
-    container_name: sugggest-proxy
+    container_name: ecommerce-proxy
     volumes:
       - ./src/infra/log/nginx:/var/log/nginx
       - ./src/infra/certs:/etc/letsencrypt
       - certbot_www:/var/www/certbot
       - ./src/infra/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./src/infra/.htpasswd:/etc/apache2/.htpasswd 
+      - ./src/infra/.htpasswd:/etc/apache2/.htpasswd
     ports:
       - 80:80
       - 443:443
@@ -43,7 +43,7 @@ services:
 
   certbot:
     image: certbot/certbot
-    container_name: sugggest-certbot
+    container_name: ecommerce-certbot
     restart: unless-stopped
     volumes:
       - ./src/infra/certs:/etc/letsencrypt

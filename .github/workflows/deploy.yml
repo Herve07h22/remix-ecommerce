@@ -15,7 +15,7 @@ jobs:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
-          host: sugggest.camilab.co
+          host: ecommerce.camilab.co
           username: debian
           key: ${{ secrets.KEY }}
           port: 22

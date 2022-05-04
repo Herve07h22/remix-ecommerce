@@ -77,7 +77,6 @@ export const Header = (props: any) => {
           pt={[4, 4, 0, 0]}
         >
           <MenuItem to="/">Home</MenuItem>
-          <MenuItem to="/how">Comment ça marche ? </MenuItem>
 
           <MenuItem to="/signup" isLast>
             <Button
@@ -94,7 +93,7 @@ export const Header = (props: any) => {
                 ],
               }}
             >
-              Obtenir un accès
+              Signup
             </Button>
           </MenuItem>
         </Flex>

@@ -11,14 +11,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Lead {
-  email String @id
+model Product {
+  sku String @id
   createdAt DateTime @default(now())
-  validTokenUntil DateTime
-  token String @unique
-  asksForToken Int @default(0)
-  lastGeneration DateTime? 
-  generationCount Int @default(0)
+  description String
+  stock Int @default(0)
+  price Int @default(0)
 }
-

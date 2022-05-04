@@ -22,19 +22,19 @@ export const LandingLayout: React.FC = ({ children }) => (
       <Breadcrumb separator="-">
         <BreadcrumbItem>
           <BreadcrumbLink href="https://camilab.co">
-            Fabriqué en Normandie par Camilab
+            Remix playground made by Camilab
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink href="https://github.com/Herve07h22/sugggest">
-            voir le code source
+          <BreadcrumbLink href="https://github.com/Herve07h22/ecommerce">
+            Source
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink href="https://cedille.ai">
-            Propulsé par Cedille
+          <BreadcrumbLink href="https://remix.run">
+            Built with Remix
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
